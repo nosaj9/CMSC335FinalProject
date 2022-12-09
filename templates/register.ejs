@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/style.css">
+
+        <title>Register</title>
+    </head>
+
+    <body>
+        <h2>Make an account</h2>
+
+        <form action="http://localhost:<%- port %>/register" method="post">
+            <fieldset>
+                <legend>Register</legend>
+                <b>Name: </b><input type="text" name="name"></input><br/><br/>
+                <b>Email: </b><input type="email" name="email"></input><br/><br/>
+            </fieldset>
+            <br/>
+            <button type="reset">Clear</button>
+            <button type="submit">Register</button>
+
+            <a href="/">Return Home</a>
+        </form>
+    </body>
+</html>
