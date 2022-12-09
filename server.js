@@ -26,9 +26,30 @@ app.get("/", (request, response) => {
     response.render("index");
 }); 
 
+app.get("/register", (request, response) => {
+  response.render("register", {port: portNumber});
+});
+
+app.post("/register", (request, response) => {
+  let user = {name: request.body.name, email: request.body.email};
+  addUser(user);
+  reseponse.render("registerConfirm");
+});
+
 if(process.argv.length != 3) {
     process.stdout.write("Usage server.js port_number\n");
     process.exit(1);
+}
+
+async function addUser(user) {
+  try {
+      await client.connect();
+      await client.db(MONGO_DB_NAME).collection(MONGO_COLLECTION).insertOne(user);
+  } catch (e) {
+      console.error(e);
+  } finally {
+      await client.close();
+  }
 }
 
 let server = http.createServer(app)
