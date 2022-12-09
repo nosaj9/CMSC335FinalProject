@@ -15,6 +15,8 @@ const uri = `mongodb+srv://${username}:${password}@cluster0.znsncma.mongodb.net/
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(__dirname));
+
 app.set("views", path.resolve(__dirname, "templates"));
 app.set("view engine", "ejs");
 
