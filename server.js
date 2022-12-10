@@ -14,16 +14,22 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://${username}:${password}@cluster0.znsncma.mongodb.net/?retryWrites=true&w=majority`
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-const axios = require("axios");
+const request = require('request');
+let currentFact = "";
 
-const options = {
-  method: 'GET',
-  url: 'https://facts-by-api-ninjas.p.rapidapi.com/v1/facts',
+var limit = 1
+request.get({
+  url: 'https://api.api-ninjas.com/v1/facts?limit=' + limit,
   headers: {
-    'X-RapidAPI-Key': '7c3147f568mshd2a2454ce1b30f8p13a6ffjsn61ba4f6378d0',
-    'X-RapidAPI-Host': 'facts-by-api-ninjas.p.rapidapi.com'
+    'X-API-Key': 'IGFgv3k1rqv2Ms/xL+Uuzw==uQB91LwQ7XLAwx7M',
+  },
+}, function(error, response, body) {
+  if(error) return console.error('Request failed:', error);
+  else if(response.statusCode != 200) return console.error('Error:', response.statusCode, body.toString('utf8'));
+  else {
+    currentFact = body.toString('utf8').slice(11).slice(0, -3);
   }
-};
+});
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname));
@@ -34,7 +40,7 @@ app.set("view engine", "ejs");
 let portNumber = process.argv[2];
 
 app.get("/", (request, response) => {
-    response.render("index");
+    response.render("index", {fact: currentFact});
 }); 
 
 app.get("/register", (request, response) => {
@@ -48,11 +54,16 @@ app.post("/register", (request, response) => {
 });
 
 app.get("/generate", (request, response) => {
-    response.render("generate", {port: portNumber, facts: "Facts will appear here"});
+    response.render("generate", {port: portNumber, facts: ">> Facts will appear here <<"});
 });
 
 app.post("/generate", (request, response) => {
-    response.render("generate", {port: portNumber, facts: "some facts"});
+
+    let factTable = "";
+
+    
+
+    response.render("generate", {port: portNumber, facts: factTable});
 });
 
 if(process.argv.length != 3) {
