@@ -100,7 +100,6 @@ async function generateFacts(email, numFacts, response) {
                 else if(resp.statusCode != 200) return console.error('Error:', resp.statusCode, body.toString('utf8'));
                 else {
                     allFacts = body.toString('utf8');
-                    console.log(allFacts);
 
                     let factsHTML = "";
 
@@ -109,7 +108,6 @@ async function generateFacts(email, numFacts, response) {
                     let counter = 0;
 
                     while (match != null) {
-                        console.log(match[1].slice(9).slice(0, -1));
                         factsHTML += "<p id=\"fact\">" + match[1].slice(9).slice(0, -1).replace(/\\/g, "") + "</p>\n";
 
                         counter += 1;
