@@ -109,9 +109,6 @@ async function generateFacts(email, numFacts, response) {
                     let counter = 0;
 
                     while (match != null) {
-                        // matched text: match[0]
-                        // match start: match.index
-                        // capturing group n: match[n]
                         console.log(match[1].slice(9).slice(0, -1));
                         factsHTML += "<p id=\"fact\">" + match[1].slice(9).slice(0, -1).replace(/\\/g, "") + "</p>\n";
 
