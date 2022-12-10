@@ -17,7 +17,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 const request = require('request');
 
 //change this depending on where you are running the app
-const HOSTNAME = "fun-fact-generator.onrender.com";
+//const HOSTNAME = "fun-fact-generator.onrender.com";
 //const HOSTNAME = "localhost";
 
 let currentFact = "";
@@ -42,7 +42,8 @@ app.use(express.static(__dirname));
 app.set("views", path.resolve(__dirname, "templates"));
 app.set("view engine", "ejs");
 
-let portNumber = process.argv[2];
+let portNumber = process.argv[3];
+let HOSTNAME = process.argv[2];
 
 app.get("/", (request, response) => {
     response.render("index", {fact: currentFact});
@@ -66,8 +67,8 @@ app.post("/generate", (request, response) => {
     generateFacts(request.body.email, parseInt(request.body.number), response);
 });
 
-if(process.argv.length != 3) {
-    process.stdout.write("Usage server.js port_number\n");
+if(process.argv.length != 4) {
+    process.stdout.write("Usage server.js hostname port_number\n");
     process.exit(1);
 }
 
