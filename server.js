@@ -104,7 +104,7 @@ async function generateFacts(email, numFacts, response) {
 
                     let factsHTML = "";
 
-                    var regex = /"(.*?)"/g;
+                    var regex = /{(.*?)}/g;
                     match = regex.exec(allFacts);
                     let counter = 0;
 
@@ -112,10 +112,8 @@ async function generateFacts(email, numFacts, response) {
                         // matched text: match[0]
                         // match start: match.index
                         // capturing group n: match[n]
-                        if(counter % 2 != 0) {
-                            console.log(match[1]);
-                            factsHTML += `<p id="fact">${match[1]}</p>` + "\n";
-                        }
+                        console.log(match[1].slice(9).slice(0, -1));
+                        factsHTML += "<p id=\"fact\">" + match[1].slice(9).slice(0, -1).replace(/\\/g, "") + "</p>\n";
 
                         counter += 1;
                         match = regex.exec(allFacts);
