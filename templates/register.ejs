@@ -11,7 +11,7 @@
     <body>
         <h2>Make an account</h2>
 
-        <form action="http://localhost:<%- port %>/register" method="post">
+        <form action="http://<%- hostname %>:<%- port %>/register" method="post">
             <fieldset>
                 <legend>Register</legend>
                 <b>Name: </b><input type="text" name="name"></input><br/><br/>

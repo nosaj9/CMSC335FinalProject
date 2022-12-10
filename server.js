@@ -15,6 +15,11 @@ const uri = `mongodb+srv://${username}:${password}@cluster0.znsncma.mongodb.net/
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 const request = require('request');
+
+//change this depending on where you are running the app
+const HOSTNAME = "fun-fact-generator.onrender.com";
+//const HOSTNAME = "localhost";
+
 let currentFact = "";
 
 var limit = 1
@@ -44,7 +49,7 @@ app.get("/", (request, response) => {
 }); 
 
 app.get("/register", (request, response) => {
-  response.render("register", {port: portNumber});
+  response.render("register", {hostname: HOSTNAME, port: portNumber});
 });
 
 app.post("/register", (request, response) => {
@@ -54,7 +59,7 @@ app.post("/register", (request, response) => {
 });
 
 app.get("/generate", (request, response) => {
-    response.render("generate", {port: portNumber, facts: ">> Facts will appear here <<"});
+    response.render("generate", {hostname: HOSTNAME, port: portNumber, facts: ">> Facts will appear here <<"});
 });
 
 app.post("/generate", (request, response) => {
@@ -114,7 +119,7 @@ async function generateFacts(email, numFacts, response) {
                         match = regex.exec(allFacts);
                     }
 
-                    response.render("generate", {port: portNumber, facts: factsHTML});
+                    response.render("generate", {hostname: HOSTNAME, port: portNumber, facts: factsHTML});
                 }
             });
         }
@@ -128,7 +133,7 @@ async function generateFacts(email, numFacts, response) {
 let server = http.createServer(app)
 
 server.listen(portNumber);
-console.log(`Web server started and running at http://localhost:${portNumber}`);
+console.log(`Web server started and running at http://${HOSTNAME}:${portNumber}`);
 
 process.stdin.setEncoding("utf8");
 process.stdout.write("Stop to shutdown the server: ");

@@ -11,7 +11,7 @@
     <body>
         <h2>Ready to learn?</h2>
 
-        <form action="http://localhost:<%- port %>/generate" method="post">
+        <form action="http://<%- hostname %>:<%- port %>/generate" method="post">
             <fieldset>
                 <legend>Fact Generator</legend>
                 <b>Email: </b><input type="email" name="email"></input><br/><br/>
