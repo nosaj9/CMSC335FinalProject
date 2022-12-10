@@ -14,6 +14,17 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://${username}:${password}@cluster0.znsncma.mongodb.net/?retryWrites=true&w=majority`
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
+const axios = require("axios");
+
+const options = {
+  method: 'GET',
+  url: 'https://facts-by-api-ninjas.p.rapidapi.com/v1/facts',
+  headers: {
+    'X-RapidAPI-Key': '7c3147f568mshd2a2454ce1b30f8p13a6ffjsn61ba4f6378d0',
+    'X-RapidAPI-Host': 'facts-by-api-ninjas.p.rapidapi.com'
+  }
+};
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname));
 
