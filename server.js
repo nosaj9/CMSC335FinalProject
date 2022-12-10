@@ -58,12 +58,7 @@ app.get("/generate", (request, response) => {
 });
 
 app.post("/generate", (request, response) => {
-
-    let factTable = "";
-
-    
-
-    response.render("generate", {port: portNumber, facts: factTable});
+    generateFacts(request.body.email, parseInt(request.body.number), response);
 });
 
 if(process.argv.length != 3) {
@@ -80,6 +75,61 @@ async function addUser(user) {
   } finally {
       await client.close();
   }
+}
+
+async function generateFacts(email, numFacts, response) {
+    try {
+        await client.connect();
+        let applicant = await client.db(MONGO_DB_NAME).collection(MONGO_COLLECTION).findOne({email: email});
+
+        let allFacts = "";
+
+        if(!applicant) {
+            response.render("generate", {port: portNumber, facts: "User doesn't exist"});
+        }
+        else {
+
+            var limit = numFacts
+                request.get({
+                url: 'https://api.api-ninjas.com/v1/facts?limit=' + limit,
+                headers: {
+                    'X-API-Key': 'IGFgv3k1rqv2Ms/xL+Uuzw==uQB91LwQ7XLAwx7M',
+                },
+            }, function(error, resp, body) {
+                if(error) return console.error('Request failed:', error);
+                else if(resp.statusCode != 200) return console.error('Error:', resp.statusCode, body.toString('utf8'));
+                else {
+                    allFacts = body.toString('utf8');
+                    console.log(allFacts);
+
+                    let factsHTML = "";
+
+                    var regex = /"(.*?)"/g;
+                    match = regex.exec(allFacts);
+                    let counter = 0;
+
+                    while (match != null) {
+                        // matched text: match[0]
+                        // match start: match.index
+                        // capturing group n: match[n]
+                        if(counter % 2 != 0) {
+                            console.log(match[1]);
+                            factsHTML += `<p id="fact">${match[1]}</p>` + "\n";
+                        }
+
+                        counter += 1;
+                        match = regex.exec(allFacts);
+                    }
+
+                    response.render("generate", {port: portNumber, facts: factsHTML});
+                }
+            });
+        }
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
 }
 
 let server = http.createServer(app)
