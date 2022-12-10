@@ -33,7 +33,15 @@ app.get("/register", (request, response) => {
 app.post("/register", (request, response) => {
   let user = {name: request.body.name, email: request.body.email};
   addUser(user);
-  reseponse.render("registerConfirm");
+  response.render("registerConfirm");
+});
+
+app.get("/generate", (request, response) => {
+    response.render("generate", {port: portNumber, facts: "Facts will appear here"});
+});
+
+app.post("/generate", (request, response) => {
+    response.render("generate", {port: portNumber, facts: "some facts"});
 });
 
 if(process.argv.length != 3) {

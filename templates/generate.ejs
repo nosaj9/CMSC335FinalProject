@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/style.css">
+
+        <title>Learn facts</title>
+    </head>
+
+    <body>
+        <h2>Ready to learn?</h2>
+
+        <form action="http://localhost:<%- port %>/generate" method="post">
+            <fieldset>
+                <legend>Fact Generator</legend>
+                <b>Email: </b><input type="email" name="email"></input><br/><br/>
+                <b>Enter how many facts: </b><input name="number"></input><br/><br/>
+            </fieldset>
+            <br/>
+            <button type="reset">Clear</button>
+            <button type="submit">Generate</button>
+
+            <br/><br/>
+
+            <a href="/">Return Home</a>
+        </form>
+        <br/>
+        <%- facts %>
+    </body>
+</html>
