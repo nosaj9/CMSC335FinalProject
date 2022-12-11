@@ -91,7 +91,7 @@ async function generateFacts(email, numFacts, response) {
         let allFacts = "";
 
         if(!applicant) {
-            response.render("generate", {port: portNumber, facts: "User doesn't exist"});
+            response.render("generate", {hostname: HOSTNAME, port: portNumber, facts: "User doesn't exist"});
         }
         else {
 
@@ -119,7 +119,7 @@ async function generateFacts(email, numFacts, response) {
                         counter += 1;
                         match = regex.exec(allFacts);
                     }
-
+                    
                     response.render("generate", {hostname: HOSTNAME, port: portNumber, facts: factsHTML});
                 }
             });
