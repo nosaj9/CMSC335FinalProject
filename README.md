@@ -5,4 +5,4 @@ API links - https://rapidapi.com/apininjas/api/facts-by-api-ninjas/
 YouTube Demo Video - https://youtu.be/8_jCCJyDJs4
 
 **IMPORTANT**  
-If render.com is down for whatever reason and you must access the website, please change the 'HOSTNAME' constant in the server.js file in order to run the app on 'localhost' so you can still use it locally!!
+If the live website is down please run the app locally using "node server.js localhost 5000" and connect to localhost:5000 for grading, thanks!
